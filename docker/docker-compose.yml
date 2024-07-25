@@ -2,7 +2,11 @@ version: '3.1'
 
 services:
     flowise:
-        image: flowiseai/flowise
+        image: aiflow
+        build:
+            context: ./
+            dockerfile: Dockerfile
+            # target: test-env
         restart: always
         environment:
             - PORT=${PORT}
@@ -30,7 +34,7 @@ services:
             - DISABLE_FLOWISE_TELEMETRY=${DISABLE_FLOWISE_TELEMETRY}
             - MODEL_LIST_CONFIG_JSON=${MODEL_LIST_CONFIG_JSON}
         ports:
-            - '${PORT}:${PORT}'
+            - '${PORT_EXPOSE}:${PORT}'
         volumes:
             - ~/.flowise:/root/.flowise
         entrypoint: /bin/sh -c "sleep 3; flowise start"
